@@ -1,4 +1,6 @@
 using ClassLibrary1.Behaviors;
+using ClassLibrary1.Exceptions.Handler;
+
 
 var builder = WebApplication.CreateBuilder(args);
 //DI container
@@ -14,8 +16,13 @@ builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
+
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //Middleware pipeline
 app.MapCarter();
+app.UseExceptionHandler(options => {}); 
+
 app.Run();
