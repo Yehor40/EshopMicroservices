@@ -17,7 +17,8 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - "8080:8080"
+      - "6000:8080"
+      - "6060:8081"
     depends_on:
       - catalogdb
 
