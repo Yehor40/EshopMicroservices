@@ -9,3 +9,5 @@ global using FluentValidation;
 global using Catalogue.Api.Data;
 global using ClassLibrary1.Behaviors;
 global using ClassLibrary1.Exceptions.Handler;
+global using Marten.Pagination;
+
