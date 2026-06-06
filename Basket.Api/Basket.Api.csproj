@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Basket\CheckoutBasket\" />
+      <Folder Include="Basket\DeleteBasket\" />
+      <Folder Include="Basket\GetBasket\" />
+      <Folder Include="Basket\StoreBasket\" />
+      <Folder Include="Data\" />
+      <Folder Include="Dtos\" />
+      <Folder Include="Exceptions\" />
+      <Folder Include="GrpcServices\" />
+      <Folder Include="Protos\" />
+    </ItemGroup>
+
+</Project>
