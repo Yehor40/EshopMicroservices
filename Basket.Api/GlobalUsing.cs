@@ -8,5 +8,6 @@ global using ClassLibrary1.Behaviors;
 global using ClassLibrary1.Exceptions;
 global using Marten;
 global using Basket.Api.Exceptions;
+global using Basket.Api.Data;
 
 
