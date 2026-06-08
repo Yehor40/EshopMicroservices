@@ -9,6 +9,16 @@
       - "5432:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql
+  basketdb:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=BasketDb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_basket:/var/lib/postgresql
 
   catalog-api:
     build:
@@ -24,3 +34,5 @@
 
 volumes:
   postgres_catalog:
+  postgres_basket:
+
