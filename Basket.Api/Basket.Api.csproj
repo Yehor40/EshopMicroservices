@@ -15,9 +15,7 @@
 
     <ItemGroup>
       <Folder Include="Basket\CheckoutBasket\" />
-      <Folder Include="Data\" />
       <Folder Include="Dtos\" />
-      <Folder Include="Exceptions\" />
       <Folder Include="GrpcServices\" />
       <Folder Include="Protos\" />
     </ItemGroup>
@@ -28,6 +26,7 @@
 
     <ItemGroup>
       <PackageReference Include="Carter" Version="8.0.0" />
+      <PackageReference Include="Marten" Version="8.30.0" />
     </ItemGroup>
 
 </Project>
