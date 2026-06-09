@@ -19,7 +19,12 @@ services:
       - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql
-
+  distributedcache:
+      image: redis
+      restart : always
+      ports:
+        - "6379:6379"
+      
   catalog-api:
     build:
       context: .
@@ -38,13 +43,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Database=Server=basketdb;port=5432;Database=BasketDb;User Id=postgres;Password=root;
+      - ConnectionStrings__Redis=distributedcache:6379
     ports:
-      - "5001:8080"
-      - "5051:8081"
+      - "6001:8080"
+      - "6061:8081"
     depends_on:
       - basketdb
+      - distributedcache
 
 volumes:
   postgres_catalog:
   postgres_basket:
-
