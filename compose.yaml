@@ -49,14 +49,19 @@ services:
       - "6061:8081"
     depends_on:
       - basketdb
-      - distributedcache
-
-volumes:
-  postgres_catalog:
-  postgres_basket:
+      - distributedcache    
   discount.grpc:
     image: discount.grpc
     build:
       context: .
       dockerfile: Discount.Grpc/Dockerfile
-
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Database=Data Source=discountdb;
+    ports:
+      - "6002:8080"
+      - "6062:8081"
+      
+volumes:
+  postgres_catalog:
+  postgres_basket:
