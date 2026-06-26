@@ -44,12 +44,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Database=Server=basketdb;port=5432;Database=BasketDb;User Id=postgres;Password=root;
       - ConnectionStrings__Redis=distributedcache:6379
+      - GrpcSettings__DiscountURl=https://discount.grpc:8081
     ports:
       - "6001:8080"
       - "6061:8081"
     depends_on:
       - basketdb
       - distributedcache    
+      - discount.grpc
   discount.grpc:
     image: discount.grpc
     build:
@@ -57,10 +59,15 @@ services:
       dockerfile: Discount.Grpc/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
       - ConnectionStrings__Database=Data Source=discountdb;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=crypt_password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/discount.grpc.pfx
     ports:
       - "6002:8080"
       - "6062:8081"
+    volumes:
+      - ~/.aspnet/https:/https:ro
       
 volumes:
   postgres_catalog:
