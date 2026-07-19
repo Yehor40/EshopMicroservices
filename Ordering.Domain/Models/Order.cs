@@ -30,7 +30,7 @@ public class Order:Aggregate<OrderId>
             Payment = payment,
             OrderStatus = orderStatus
         };
-        //order.AddDomainEvent(new OrderCreatedEvent(order));
+        order.AddDomainEvent(new OrderCreatedEvent(order));
         return order;
     }
 
@@ -41,7 +41,7 @@ public class Order:Aggregate<OrderId>
         BillingAddress = billingAddress;
         Payment = payment;
         OrderStatus = orderStatus;
-        //AddDomainEvent(new OrderUpdatedEvent(this));
+        AddDomainEvent(new OrderUpdatedEvent(this));
     }
 
     public void Add(ProductId productId, int quantity, decimal price)
