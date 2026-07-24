@@ -16,13 +16,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Basket\CheckoutBasket\" />
       <Folder Include="Dtos\" />
       <Folder Include="GrpcServices\" />
       <Folder Include="Protos\" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj" />
       <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.csproj" />
     </ItemGroup>
 

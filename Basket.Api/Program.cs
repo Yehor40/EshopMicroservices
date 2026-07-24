@@ -1,3 +1,4 @@
+using BuildingBlocks.Messaging.MassTransit;
 using ClassLibrary1.Exceptions.Handler;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
@@ -42,6 +43,7 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     }
     return handler;
 });
+builder.Services.AddMessageBroker(builder.Configuration);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
