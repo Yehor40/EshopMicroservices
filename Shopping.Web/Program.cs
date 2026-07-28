@@ -2,6 +2,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddRefitClient<ICatalogService>().ConfigureHttpClient(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["AppSettings:GatewayAddress"]!);
+});
 
 var app = builder.Build();
 
