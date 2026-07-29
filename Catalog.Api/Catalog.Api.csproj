@@ -9,6 +9,8 @@
         <ContainerDevelopmentMode>Regular</ContainerDevelopmentMode>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
