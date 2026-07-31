@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@inject IBasketService BasketService
+@{
+    var basketItemCount = 0;
+    try
+    {
+        var basket = await BasketService.LoadUserBasket();
+        basketItemCount = basket.Items.Sum(item => item.Quantity);
+    }
+    catch
+    {
+        basketItemCount = 0;
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,18 +54,18 @@
                         </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0">
+                    <form class="form-inline my-2 my-lg-0" method="get" asp-page="/ProductList">
                         <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" name="searchTerm" placeholder="Search...">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-secondary btn-number">
+                                <button type="submit" class="btn btn-secondary btn-number">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
                         </div>
                         <a class="btn btn-success btn-sm ml-3" asp-area="" asp-page="/Cart">
                             <i class="fa fa-shopping-cart"></i> Cart
-                            <span class="badge badge-light">3</span>
+                            <span class="badge badge-light">@basketItemCount</span>
                         </a>
                     </form>
                 </div>
@@ -174,5 +187,3 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-
-

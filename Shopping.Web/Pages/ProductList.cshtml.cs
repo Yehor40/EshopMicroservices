@@ -7,21 +7,31 @@ public class ProductListModel(IBasketService basketService,ICatalogService catal
     
     [BindProperty(SupportsGet = true)]
     public string SelectedCategory { get; set; } = default!;
+    [BindProperty(SupportsGet = true)]
+    public string SearchTerm { get; set; } = default!;
     
-    public async Task<IActionResult> OnGetAsync(string categoryName)
+    public async Task<IActionResult> OnGetAsync(string categoryName, string searchTerm)
     {
         var response = await catalogService.GetProducts();
         CategoryList = response.Products.SelectMany(p => p.Category).Distinct();
+        var products = response.Products;
 
         if (!string.IsNullOrWhiteSpace(categoryName))
         {
-            ProductList=response.Products.Where(p=>p.Category.Contains(categoryName));
+            products=products.Where(p=>p.Category.Contains(categoryName));
             SelectedCategory=categoryName;
         }
-        else
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            ProductList=response.Products;
+            products = products.Where(p =>
+                p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                p.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                p.Category.Any(c => c.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)));
+            SearchTerm = searchTerm;
         }
+
+        ProductList=products;
         return Page();
     }
 
@@ -29,16 +39,7 @@ public class ProductListModel(IBasketService basketService,ICatalogService catal
     {
         logger.LogInformation("Add to cart button is clicked");
         var productResponse = await catalogService.GetProduct(productId);
-        var basket = await basketService.LoadUserBasket();
-        basket.Items.Add(new ShoppingCartItemModel
-        {
-            ProductId = productId,
-            ProductName = productResponse.Product.Name,
-            Price = productResponse.Product.Price,
-            Quantity = 1,
-            Color = "Black"
-        });
-        await basketService.StoreBasket(new StoreBasketRequest(basket));
+        await basketService.AddItemToBasketAsync(productResponse.Product, 1, "Black");
         return RedirectToPage("Cart");
     }
 }
