@@ -21,49 +21,53 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Available</th>
-                            <th scope="col" class="text-center">Quantity</th>
-                            <th scope="col" class="text-right">Price</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach (var cartItem in Model.Cart.Items)
-                        {
+                <form method="post">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /></td>
-                                <td>@cartItem.ProductName</td>
-                                <td>In stock</td>
-                                <td><input class="form-control" type="text" value="@cartItem.Quantity" /></td>
-                                <td class="text-right">@(cartItem.Price * cartItem.Quantity) $</td>
-                                <td class="text-right">
-
-                                    <form asp-page-handler="removetocart" method="post">
-                                        <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                        <input type="hidden" asp-for="@cartItem.ProductId" name="ProductId" />
-
-                                    </form>
-
-                                </td>
+                                <th scope="col"> </th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Available</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col" class="text-right">Price</th>
+                                <th> </th>
                             </tr>
-                        }
+                        </thead>
+                        <tbody>
 
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>@Model.Cart.TotalPrice $</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+                            @for (var i = 0; i < Model.Cart.Items.Count; i++)
+                            {
+                                var cartItem = Model.Cart.Items[i];
+                                <tr>
+                                    <td><img src="https://dummyimage.com/50x50/55595c/fff" /></td>
+                                    <td>@cartItem.ProductName</td>
+                                    <td>In stock</td>
+                                    <td>
+                                        <input type="hidden" name="CartItems[@i].ProductId" value="@cartItem.ProductId" />
+                                        <input class="form-control" type="number" name="CartItems[@i].Quantity" value="@cartItem.Quantity" min="1" max="100" />
+                                    </td>
+                                    <td class="text-right">@(cartItem.Price * cartItem.Quantity) $</td>
+                                    <td class="text-right">
+                                        <button asp-page-handler="RemoveToCart" name="productId" value="@cartItem.ProductId" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">
+                                    <button asp-page-handler="UpdateCart" class="btn btn-sm btn-primary">Update</button>
+                                </td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right"><strong>@Model.Cart.TotalPrice $</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </div>
         <div class="col mb-2">

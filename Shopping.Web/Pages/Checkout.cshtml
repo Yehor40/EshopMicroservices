@@ -33,9 +33,9 @@
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
                             <h6 class="my-0">@item.ProductName</h6>
-                            <small class="text-muted">@item.ProductName</small>
+                            <small class="text-muted">Qty: @item.Quantity</small>
                         </div>
-                        <span class="text-muted">$@item.Price</span>
+                        <span class="text-muted">$@(item.Price * item.Quantity)</span>
                     </li>
                 }
 
@@ -152,15 +152,15 @@
 
                 <div class="d-block my-3">
                     <div class="custom-control custom-radio">
-                        <input asp-for="Order.PaymentMethod" id="credit" name="paymentMethod" type="radio" value="Credit card" class="custom-control-input" checked required>
+                        <input asp-for="Order.PaymentMethod" id="credit" name="paymentMethod" type="radio" value="1" class="custom-control-input" checked required>
                         <label asp-for="Order.PaymentMethod" class="custom-control-label" for="credit">Credit card</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input asp-for="Order.PaymentMethod" id="debit" name="paymentMethod" type="radio" value="Debit card" class="custom-control-input" required>
+                        <input asp-for="Order.PaymentMethod" id="debit" name="paymentMethod" type="radio" value="2" class="custom-control-input" required>
                         <label asp-for="Order.PaymentMethod" class="custom-control-label" for="debit">Debit card</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input asp-for="Order.PaymentMethod" id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
+                        <input asp-for="Order.PaymentMethod" id="paypal" name="paymentMethod" type="radio" value="3" class="custom-control-input" required>
                         <label asp-for="Order.PaymentMethod" class="custom-control-label" for="paypal">Paypal</label>
                     </div>
                 </div>

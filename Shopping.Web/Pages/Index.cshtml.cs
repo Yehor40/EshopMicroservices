@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace Shopping.Web.Pages;
 
 public class IndexModel(ICatalogService catalogService,IBasketService basketService, ILogger<IndexModel> logger) : PageModel
@@ -18,16 +16,7 @@ public class IndexModel(ICatalogService catalogService,IBasketService basketServ
     {
         logger.LogInformation("Add to cart button clicked");
         var productResponse = await catalogService.GetProduct(productId);
-        var basket = await basketService.LoadUserBasket();
-        basket.Items.Add(new ShoppingCartItemModel
-        {
-            ProductId = productId,
-            ProductName = productResponse.Product.Name,
-            Price = productResponse.Product.Price,
-            Quantity = 1,
-            Color = "black"
-        });
-        await basketService.StoreBasket(new StoreBasketRequest(basket));
+        await basketService.AddItemToBasketAsync(productResponse.Product, 1, "Black");
         return RedirectToPage("/Cart");
     }
 }
